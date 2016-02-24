@@ -5,10 +5,10 @@ var Account = require('./Account.jsx')
 var AccountList = React.createClass({
   
   render: function() {
-    var accountNodes = this.props.data.map(function(account) {
+    var accountNodes = this.props.data.map(function(account, index) {
       return (
-        <Account name={account.name} key={account.id}>
-        {account.owner}: £{account.amount}
+        <Account name={account.name} key={index}>
+        {account.owner}: £{account.amount} {account.details}
         </Account>
         );
     });

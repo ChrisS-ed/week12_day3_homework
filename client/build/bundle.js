@@ -211,6 +211,7 @@
 	  this.owner = params.owner;
 	  this.amount = params.amount;
 	  this.type = params.type;
+	  this.details = params.details;
 	};
 	
 	module.exports = Account;
@@ -222,23 +223,28 @@
 	module.exports = [
 	  { "owner": "jay",
 	    "amount": 125.50,
-	    "type": "personal"
+	    "type": "personal",
+	    "details": ""
 	  },
 	  { "owner": "val",
 	    "amount": 55125.10,
-	    "type": "personal"
+	    "type": "personal",
+	    "details": ""
 	  },
 	  { "owner": "marc",
 	    "amount": 400.00,
-	    "type": "personal"
+	    "type": "personal",
+	    "details": ""
 	  },
 	  { "owner": "keith",
 	    "amount": 220.25,
-	    "type": "business"
+	    "type": "business",
+	    "details": ""
 	  },
 	  { "owner": "rick",
 	    "amount": 100000.00,
-	    "type": "business"
+	    "type": "business",
+	    "details": "(has been hacked!)"
 	  }
 	]
 
@@ -19861,9 +19867,7 @@
 	  getInitialState: function getInitialState() {
 	    return { accounts: sampleAccounts };
 	  },
-	  render: function render() {
-	
-	    var bank = new Bank();
+	  addInterest: function addInterest() {
 	    var _iteratorNormalCompletion = true;
 	    var _didIteratorError = false;
 	    var _iteratorError = undefined;
@@ -19872,7 +19876,7 @@
 	      for (var _iterator = this.state.accounts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	        var account = _step.value;
 	
-	        bank.addAccount(account);
+	        account.amount = Math.floor(account.amount * 1.1);
 	      }
 	    } catch (err) {
 	      _didIteratorError = true;
@@ -19885,6 +19889,38 @@
 	      } finally {
 	        if (_didIteratorError) {
 	          throw _iteratorError;
+	        }
+	      }
+	    }
+	
+	    this.setState({
+	      accounts: this.state.accounts
+	    });
+	  },
+	  render: function render() {
+	
+	    var bank = new Bank();
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
+	
+	    try {
+	      for (var _iterator2 = this.state.accounts[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	        var account = _step2.value;
+	
+	        bank.addAccount(account);
+	      }
+	    } catch (err) {
+	      _didIteratorError2 = true;
+	      _iteratorError2 = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	          _iterator2.return();
+	        }
+	      } finally {
+	        if (_didIteratorError2) {
+	          throw _iteratorError2;
 	        }
 	      }
 	    }
@@ -19904,7 +19940,12 @@
 	        bank.totalCash(),
 	        ' '
 	      ),
-	      React.createElement(AccountBox, null)
+	      React.createElement(AccountBox, null),
+	      React.createElement(
+	        'button',
+	        { type: 'button', onClick: this.addInterest },
+	        'Add interest'
+	      )
 	    );
 	  }
 	});
@@ -20085,6 +20126,7 @@
 	  getInitialState: function getInitialState() {
 	    return { accounts: sampleAccounts };
 	  },
+	
 	  render: function render() {
 	
 	    var bank = new Bank();
@@ -20162,13 +20204,15 @@
 	
 	
 	  render: function render() {
-	    var accountNodes = this.props.data.map(function (account) {
+	    var accountNodes = this.props.data.map(function (account, index) {
 	      return React.createElement(
 	        Account,
-	        { name: account.name, key: account.id },
+	        { name: account.name, key: index },
 	        account.owner,
 	        ': £',
-	        account.amount
+	        account.amount,
+	        ' ',
+	        account.details
 	      );
 	    });
 	    return React.createElement(

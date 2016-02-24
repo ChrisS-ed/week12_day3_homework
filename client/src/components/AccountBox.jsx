@@ -8,6 +8,7 @@ var AccountBox = React.createClass({
   getInitialState: function() {
     return { accounts: sampleAccounts };
   },
+
   render: function() {
 
     var bank = new Bank();
