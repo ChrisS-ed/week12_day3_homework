@@ -244,7 +244,7 @@
 	  { "owner": "rick",
 	    "amount": 100000.00,
 	    "type": "business",
-	    "details": "(has been hacked!)"
+	    "details": ""
 	  }
 	]
 
