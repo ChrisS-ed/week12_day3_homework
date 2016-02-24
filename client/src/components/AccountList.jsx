@@ -8,7 +8,7 @@ var AccountList = React.createClass({
     var accountNodes = this.props.data.map(function(account) {
       return (
         <Account name={account.name} key={account.id}>
-        £{account.amount}
+        {account.owner}: £{account.amount}
         </Account>
         );
     });

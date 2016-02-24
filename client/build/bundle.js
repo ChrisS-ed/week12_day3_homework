@@ -20166,7 +20166,8 @@
 	      return React.createElement(
 	        Account,
 	        { name: account.name, key: account.id },
-	        '£',
+	        account.owner,
+	        ': £',
 	        account.amount
 	      );
 	    });
